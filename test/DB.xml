@@ -1,0 +1,36 @@
+<dataset>
+    <Categories ID="0" CategoryName="Memory Plank"/>
+
+    <Categories ID="1" CategoryName="Power Bank"/>"
+
+    <Categories ID="2" CategoryName="Tablet"/>
+
+
+
+
+    <Products ID="0" ProductName="MEGAPOWERBANK!!111" Price="1200.00" CategoryID="1"/>
+
+    <Products ID="1" ProductName="Usual power bank" Price="800.00" CategoryID="1"/>
+
+    <Products ID="2" ProductName="sad power bank :(" Price="20.00" CategoryID="1"/>
+
+    <Products ID="3" ProductName="Memory XDDR 1337GHz" Price="9000.01" CategoryID="0"/>
+
+    <Products ID="4" ProductName="Memory NOXDDR 619MHz" Price="900.00" CategoryID="0"/>
+
+    <Products ID="5" ProductName="Tabletko" Price="350.00" CategoryID="2"/>
+
+
+    <Users ID="0" UserName="Uncle Bob"/>
+
+
+    <Orders ID="0" TimeStamp="2007-07-07 12:00:00" UserID="0" Price="3200.00"/>
+    <OrderProducts ID="0" OrderID="0" ProductID="1"/>
+    <OrderProducts ID="1" OrderID="0" ProductID="1"/>
+    <OrderProducts ID="2" OrderID="0" ProductID="2"/>
+
+    <Orders ID="1" TimeStamp="2009-07-07 12:20:00" UserID="0"/>
+    <OrderProducts ID="3" OrderID="1" ProductID="3" Price="9000.01"/>
+
+
+</dataset>
