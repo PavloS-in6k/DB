@@ -10,15 +10,9 @@ import java.util.List;
 
 public class Task {
     private IDatabaseTester databaseTester;
-    private CategoryDAOImpl categoryDAO = new CategoryDAOImpl();
-
-    public void setCategoryDAO(CategoryDAOImpl categoryDAO) {
-        this.categoryDAO = categoryDAO;
-    }
 
     public void setConnection(IDatabaseTester databaseTester) {
         this.databaseTester = databaseTester;
-        categoryDAO.setConnection(databaseTester);
     }
 
     public List<ItemCount> getCategoriesWithCounts() throws Exception {

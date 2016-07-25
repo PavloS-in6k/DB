@@ -8,11 +8,16 @@ public class CategoryDAOImpl {
     private Session session;
 
     public Category getCategory(String key) {
-        Transaction transaction;
-
-
-
-        return null;
+        Category requestedCategory = null;
+        try {
+            requestedCategory = session.get(Category.class, key);
+        } catch (RuntimeException exception) {
+            exception.printStackTrace();
+        }
+        finally {
+            session.close();
+        }
+        return requestedCategory;
     }
 
     public void setSession(Session session) {

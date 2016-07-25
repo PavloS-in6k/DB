@@ -5,6 +5,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 public class CategoryDAOTest {
     private CategoryDAOImpl categoryDAO;
     private SessionFactory sessionFactory;
@@ -24,7 +28,7 @@ public class CategoryDAOTest {
     public void getFirstCategory() throws Exception {
         Category testCategory = new Category(0,"Memory Plank");
 
-
+        assertThat(categoryDAO.getCategory("0"), is(equalTo(testCategory)));
     }
 
     @After
