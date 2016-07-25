@@ -1,19 +1,41 @@
 package Entinity;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "Users", catalog = "Entity", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "ID"),
+        @UniqueConstraint(columnNames = "Username")
+})
 public class User {
     private String name;
-    private List<Order> order;
     private int ID;
 
     public User() {
-        order = new ArrayList<>();
     }
 
     public User(int id, String name) {
         this.ID = id;
+        this.name = name;
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", unique = true, nullable = false)
+    public int getID() {
+        return ID;
+    }
+
+    @Column(name = "UserName", nullable = false)
+    public String getName() {
+        return name;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public void setName(String name) {
         this.name = name;
     }
 }

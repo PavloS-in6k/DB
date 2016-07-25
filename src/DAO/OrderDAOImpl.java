@@ -33,22 +33,20 @@ public class OrderDAOImpl {
                 "select UserID, TimeStamp, Price FROM Orders WHERE ID=" + key);
         User user = null;
         LocalDateTime timeStamp = null;
-        List<Product> products = null;
         BigDecimal cost = null;
         int ID = Integer.parseInt(key);
         while (rs.next()) {
             user = userDAO.getUserByID(String.valueOf(rs.getInt("UserID")));
             timeStamp = rs.getTimestamp("TimeStamp").toLocalDateTime();
             cost = rs.getBigDecimal("Price");
-            products = getOrderProducts(key);
         }
         rs.close();
         stmt.close();
 
-        return new Order(user, timeStamp, products, cost);
+        return new Order(user, timeStamp, cost, ID);
     }
 
-    private List<Product> getOrderProducts(String key) throws Exception {
+    public List<Product> getOrderProducts(String key) throws Exception {
         Statement stmt = databaseTester.getConnection().getConnection().createStatement();
         ResultSet rs = stmt.executeQuery(
                 "select ProductID FROM OrderProducts WHERE OrderID=" + key);

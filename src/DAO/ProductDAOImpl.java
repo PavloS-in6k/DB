@@ -1,5 +1,6 @@
 package DAO;
 
+import Entinity.Category;
 import Entinity.Product;
 import org.dbunit.IDatabaseTester;
 
@@ -27,13 +28,13 @@ public class ProductDAOImpl {
         int ID;
         String name;
         BigDecimal price;
-        int categoryID;
+        Category category;
         while (rs.next()) {
             ID = rs.getInt("ID");
             name = rs.getString("ProductName");
             price = rs.getBigDecimal("Price");
-            categoryID = rs.getInt("CategoryID");
-            products.add(new Product(ID, price, name, categoryID));
+            category = CategoryDAOImpl.getCategory(String.valueOf(rs.getInt("CategoryID")));
+            products.add(new Product(ID, price, name, category));
         }
 
         rs.close();
@@ -73,6 +74,6 @@ public class ProductDAOImpl {
         }
         rs.close();
         stmt.close();
-        return new Product(ID, price, name, Integer.parseInt(key));
+        return new Product(ID, price, name, CategoryDAOImpl.getCategory((key)));
     }
 }

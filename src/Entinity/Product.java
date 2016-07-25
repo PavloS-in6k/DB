@@ -1,50 +1,68 @@
 package Entinity;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 
+@Entity
+@Table(name = "Products", catalog = "Entity", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "ID"),
+        @UniqueConstraint(columnNames = "ProductName"),
+        @UniqueConstraint(columnNames = "Price"),
+        @UniqueConstraint(columnNames = "CategoryID")
+})
 public class Product {
     private BigDecimal price;
     private String name;
     private int ID;
-    private int categoryID;
+    private Category category;
 
-    public Product(int ID, BigDecimal price, String name, int categoryID) {
+    public Product(int ID, BigDecimal price, String name, Category category) {
         this.ID = ID;
         this.name = name;
         this.price = price;
-        this.categoryID = categoryID;
+        this.category = category;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", unique = true, nullable = false)
     public int getID() {
         return ID;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
-    }
-
+    @Column(name = "Price", nullable = false)
     public BigDecimal getPrice() {
         return price;
+    }
+
+    @Column(name = "ProductName", nullable = false)
+    public String getName() {
+        return name;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    public String getName() {
-        return name;
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public int getCategoryID() {
-        return categoryID;
-    }
-
-    public void setCategoryID(int categoryID) {
-        this.categoryID = categoryID;
+    public void setCategoryID(Category category) {
+        this.category = category;
     }
 
     @Override
