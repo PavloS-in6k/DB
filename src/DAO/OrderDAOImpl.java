@@ -12,9 +12,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Pashka on 24.07.2016.
- */
 public class OrderDAOImpl {
     private IDatabaseTester databaseTester;
     private UserDAOImpl userDAO;

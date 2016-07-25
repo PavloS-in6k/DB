@@ -32,6 +32,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -82,9 +83,8 @@ public class CategoryDAOTest {
         transformer = tf.newTransformer();
         StringWriter writer = new StringWriter();
         transformer.transform(new DOMSource(doc), new StreamResult(writer));
-        String output = writer.getBuffer().toString();
 
-        return output;
+        return writer.getBuffer().toString();
     }
 
     private static Document getXml() throws ParserConfigurationException, SAXException, IOException {
@@ -138,7 +138,7 @@ public class CategoryDAOTest {
 
     @Test
     public void isAllProductsForCategoryGivenBackCorrect() throws Exception {
-        Category testSample = new Category(2, "Tablet", Arrays.asList(new Product(5, BigDecimal.valueOf(350.00), "Tabletko", 2)));
+        Category testSample = new Category(2, "Tablet", Collections.singletonList(new Product(5, BigDecimal.valueOf(350.00), "Tabletko", 2)));
         Category gettedSample = categoryDAO.getCategory("2");
 
         assertEquals(gettedSample.getName(), testSample.getName());
@@ -158,7 +158,7 @@ public class CategoryDAOTest {
                 new Product(1, BigDecimal.valueOf(800.00), "Usual power bank", 1),
                 new Product(2, BigDecimal.valueOf(20.00), "sad power bank :(", 1)
         ));
-        Category testTablets = new Category(2, "Tablet", Arrays.asList(new Product(5, BigDecimal.valueOf(350.00), "Tabletko", 2)));
+        Category testTablets = new Category(2, "Tablet", Collections.singletonList(new Product(5, BigDecimal.valueOf(350.00), "Tabletko", 2)));
 
 
         List<Category> values = categoryDAO.getAllCategories();

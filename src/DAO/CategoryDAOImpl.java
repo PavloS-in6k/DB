@@ -11,7 +11,7 @@ import java.util.List;
 
 public class CategoryDAOImpl {
     private IDatabaseTester databaseTester;
-    ProductDAOImpl productDAO;
+    private ProductDAOImpl productDAO;
 
     public void setProductDAO(ProductDAOImpl productDAO) {
         this.productDAO = productDAO;
