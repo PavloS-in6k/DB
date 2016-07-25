@@ -4,12 +4,6 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "Products", catalog = "Entity", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "ID"),
-        @UniqueConstraint(columnNames = "ProductName"),
-        @UniqueConstraint(columnNames = "Price"),
-        @UniqueConstraint(columnNames = "CategoryID")
-})
 public class Product {
     private BigDecimal price;
     private String name;
@@ -21,6 +15,9 @@ public class Product {
         this.name = name;
         this.price = price;
         this.category = category;
+    }
+
+    public Product() {
     }
 
     @Id

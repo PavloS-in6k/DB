@@ -39,7 +39,7 @@ public class DB {
 
     public void setUpDB() throws Exception {
         databaseTester = new JdbcDatabaseTester(org.hsqldb.jdbcDriver.class
-                .getName(), "jdbc:hsqldb:file:~Desktop/si", "sa", "");
+                .getName(), "jdbc:hsqldb:mem:Shop", "sa", "");
         createTablesSinceDbUnitDoesNot(databaseTester.getConnection().getConnection());
         String inputXml = getStringDBfromXml();
         IDataSet dataSet = new FlatXmlDataSetBuilder().build(new StringReader(inputXml));

@@ -6,12 +6,6 @@ import java.time.LocalDateTime;
 
 
 @Entity
-@Table(name = "Orders", catalog = "Entity", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "ID"),
-        @UniqueConstraint(columnNames = "TimeStamp"),
-        @UniqueConstraint(columnNames = "Price"),
-        @UniqueConstraint(columnNames = "UserID")
-})
 public class Order {
     private int ID;
     private User user;
@@ -23,6 +17,9 @@ public class Order {
         this.timeStamp = timeStamp;
         this.price = cost;
         this.ID = ID;
+    }
+
+    public Order() {
     }
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

@@ -3,10 +3,6 @@ package Entinity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Users", catalog = "Entity", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "ID"),
-        @UniqueConstraint(columnNames = "Username")
-})
 public class User {
     private String name;
     private int ID;

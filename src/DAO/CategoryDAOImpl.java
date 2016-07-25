@@ -2,12 +2,11 @@ package DAO;
 
 import Entinity.Category;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 public class CategoryDAOImpl {
     private Session session;
 
-    public Category getCategory(String key) {
+    public Category getCategory(int key) {
         Category requestedCategory = null;
         try {
             requestedCategory = session.get(Category.class, key);

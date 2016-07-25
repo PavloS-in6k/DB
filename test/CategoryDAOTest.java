@@ -17,8 +17,8 @@ public class CategoryDAOTest {
     @Before
     public void setUp() throws Exception {
         database = new DB();
-        database.setUpSessionFactory();
         database.setUpDB();
+        database.setUpSessionFactory();
         sessionFactory = database.getFactory();
         categoryDAO = new CategoryDAOImpl();
         categoryDAO.setSession(sessionFactory.openSession());
@@ -28,7 +28,14 @@ public class CategoryDAOTest {
     public void getFirstCategory() throws Exception {
         Category testCategory = new Category(0,"Memory Plank");
 
-        assertThat(categoryDAO.getCategory("0"), is(equalTo(testCategory)));
+        assertThat(categoryDAO.getCategory(0), is(equalTo(testCategory)));
+    }
+
+    @Test
+    public void getCateg() throws Exception {
+        Category testCategory = new Category(1,"Power Bank");
+
+        assertThat(categoryDAO.getCategory(1), is(equalTo(testCategory)));
     }
 
     @After

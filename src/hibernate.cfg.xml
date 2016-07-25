@@ -5,13 +5,17 @@
 <hibernate-configuration>
     <session-factory>
         <!-- Database connection properties - Driver, URL, user, password -->
-        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost/TestDB</property>
+        <property name="hibernate.connection.driver_class">org.hsqldb.jdbcDriver</property>
+        <property name="hibernate.connection.url">jdbc:hsqldb:mem:Shop</property>
         <property name="hibernate.connection.username">sa</property>
         <property name="hibernate.connection.password"></property>
 
+        <!--  -->
         <!-- JDBC connection pool (use the built-in) -->
         <property name="connection.pool_size">1</property>
+
+
+        <property name="dialect">org.hibernate.dialect.HSQLDialect</property>
 
         <!-- Mapping with model class containing annotations -->
         <mapping class="Entinity.Category"/>
