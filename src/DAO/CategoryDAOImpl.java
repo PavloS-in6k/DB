@@ -3,6 +3,9 @@ package DAO;
 import Entinity.Category;
 import org.hibernate.Session;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CategoryDAOImpl {
     private Session session;
 
@@ -17,6 +20,19 @@ public class CategoryDAOImpl {
             session.close();
         }
         return requestedCategory;
+    }
+
+    public List<Category> getAllCategories(){
+        List<Category> categories = new ArrayList<>();
+        try {
+            categories = session.createQuery("FROM Category").getResultList();
+        } catch (RuntimeException exception) {
+            exception.printStackTrace();
+        }
+        finally {
+            session.close();
+        }
+        return categories;
     }
 
     public void setSession(Session session) {

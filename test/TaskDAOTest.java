@@ -13,7 +13,7 @@ public class TaskDAOTest {
     @BeforeClass
     public static void init() throws Exception {
         database.setUpSessionFactory();
-        database.setUpDB();
+
     }
 
 

@@ -3,7 +3,7 @@ package Entinity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Category", catalog = "Entity", uniqueConstraints = {
+@Table(name = "Categories", catalog = "Entity", uniqueConstraints = {
         @UniqueConstraint(columnNames = "ID"),
         @UniqueConstraint(columnNames = "CategoryName")
 })
