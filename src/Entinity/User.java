@@ -3,6 +3,10 @@ package Entinity;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "Users", catalog = "Entity", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "ID"),
+        @UniqueConstraint(columnNames = "UserName")
+})
 public class User {
     private String name;
     private int ID;
@@ -33,5 +37,24 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (ID != user.ID) return false;
+        return name != null ? name.equals(user.name) : user.name == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + ID;
+        return result;
     }
 }

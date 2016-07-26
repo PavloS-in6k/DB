@@ -2,41 +2,42 @@ package DAO;
 
 import Entinity.Category;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryDAOImpl {
-    private Session session;
+    private SessionFactory sessionFactory;
 
     public Category getCategory(int key) {
         Category requestedCategory = null;
+        Session session = sessionFactory.openSession();
         try {
             requestedCategory = session.get(Category.class, key);
         } catch (RuntimeException exception) {
             exception.printStackTrace();
-        }
-        finally {
+        } finally {
             session.close();
         }
         return requestedCategory;
     }
 
-    public List<Category> getAllCategories(){
+    public List<Category> getAllCategories() {
         List<Category> categories = new ArrayList<>();
+        Session session = sessionFactory.openSession();
         try {
             categories = session.createQuery("FROM Category").getResultList();
         } catch (RuntimeException exception) {
             exception.printStackTrace();
-        }
-        finally {
+        } finally {
             session.close();
         }
         return categories;
     }
 
-    public void setSession(Session session) {
-        this.session = session;
+    public void setSession(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 }
 

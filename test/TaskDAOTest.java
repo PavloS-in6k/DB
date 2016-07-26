@@ -1,21 +1,57 @@
-import DAO.CategoryDAOImpl;
-import DAO.OrderDAOImpl;
-import DAO.Task;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import DAO.TaskDAO;
+import Entinity.Category;
+import Entinity.Product;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
 
 public class TaskDAOTest {
-    private static DB database;
-    private static CategoryDAOImpl categoryDAO;
-    private static Task task;
-    private static OrderDAOImpl orderDAO;
+    TaskDAO taskDAO = new TaskDAO();
 
-    @BeforeClass
-    public static void init() throws Exception {
-        database.setUpSessionFactory();
-
+    @Before
+    public void init() throws Exception {
+        taskDAO.setConnectionFactory(DB.getConnectionFactory());
     }
 
+    @Test
+    public void getCategoriesWithCounts() throws Exception {
+        Category memory = new Category(0, "Memory Plank");
+        memory.setProductsCount(2);
+        Category powerBank = new Category(1, "Power Bank");
+        powerBank.setProductsCount(3);
+        Category tablet = new Category(2, "Tablet");
+        tablet.setProductsCount(1);
+
+        assertThat(taskDAO.getAllCategoriesWithNumbers(), contains(memory, powerBank, tablet));
+    }
+
+    @Test
+    public void getAllItemsForOrderID() throws Exception {
+        /*
+       <OrderProducts ID="0" OrderID="0" ProductID="1"/>
+       <OrderProducts ID="1" OrderID="0" ProductID="1"/>
+
+       <Products ID="1" ProductName="Usual power bank" Price="800.00" CategoryID="1"/>
+
+       <OrderProducts ID="2" OrderID="0" ProductID="2"/>
+
+       <Products ID="2" ProductName="sad power bank :(" Price="20.00" CategoryID="1"/>
+         */
+        List<Product> productsForID0 = Arrays.asList(
+                new Product(1, new BigDecimal("800.00"), "Usual power bank", new Category(1, "Power Bank")),
+                new Product(1, new BigDecimal("800.00"), "Usual power bank", new Category(1, "Power Bank")),
+                new Product(2, new BigDecimal("20.00"), "sad power bank :(", new Category(1, "Power Bank"))
+        );
+
+        assertThat(taskDAO.getAllItemsForOrderID(0), contains(productsForID0));
+    }
+}
 
 //
 //    @Test
@@ -77,9 +113,8 @@ public class TaskDAOTest {
 //        assertEquals(top3.size(), 3);
 //        assertEquals(top3.get(0).getName(), "MEGAPOWERBANK!!111");
 //    }
-
-    @AfterClass
-    public static void cleanUp() throws Exception {
-        database.cleanUp();
-    }
-}
+//
+//    @AfterClass
+//    public static void cleanUp() throws Exception {
+//        database.cleanUp();
+//    }

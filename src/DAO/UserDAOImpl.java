@@ -1,17 +1,30 @@
 package DAO;
 
-import Entinity.Order;
 import Entinity.User;
-import org.dbunit.IDatabaseTester;
-
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 public class UserDAOImpl {
-    private IDatabaseTester databaseTester;
-    private OrderDAOImpl orderDAO = new OrderDAOImpl();
+    private SessionFactory sessionFactory;
+
+    public User getUserByID(int key) {
+        Session session = sessionFactory.openSession();
+        User user = null;
+        try {
+            user = session.get(User.class, key);
+        } catch (RuntimeException exception) {
+            exception.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return user;
+    }
+
+    public void setConnectionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+}
+
 
 //    public void setDatabaseTester(IDatabaseTester databaseTester) {
 //        this.databaseTester = databaseTester;
@@ -45,5 +58,4 @@ public class UserDAOImpl {
 //        stmt.close();
 //        return orders;
 //    }
-}
 

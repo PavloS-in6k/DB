@@ -1,6 +1,5 @@
 import DAO.CategoryDAOImpl;
 import Entinity.Category;
-import org.hibernate.SessionFactory;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,17 +11,12 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class CategoryDAOTest {
-    private CategoryDAOImpl categoryDAO;
-    private SessionFactory sessionFactory;
-    private DB database;
+    private CategoryDAOImpl categoryDAO = new CategoryDAOImpl();
 
     @Before
     public void setUp() throws Exception {
-        database = new DB();
-        database.setUpSessionFactory();
-        sessionFactory = database.getFactory();
-        categoryDAO = new CategoryDAOImpl();
-        categoryDAO.setSession(sessionFactory.openSession());
+        DB.setUpSessionFactory();
+        categoryDAO.setSession(DB.getConnectionFactory());
     }
 
     @Test

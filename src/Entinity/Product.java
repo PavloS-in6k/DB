@@ -4,6 +4,13 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
+
+@Table(name = "Products", catalog = "Entity", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "ID"),
+        @UniqueConstraint(columnNames = "ProductName"),
+        @UniqueConstraint(columnNames = "Price"),
+        @UniqueConstraint(columnNames = "CategoryID")
+})
 public class Product {
     private BigDecimal price;
     private String name;
@@ -37,7 +44,8 @@ public class Product {
         return name;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "CategoryID", nullable = false)
     public Category getCategory() {
         return category;
     }

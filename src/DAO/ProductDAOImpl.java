@@ -1,23 +1,31 @@
 package DAO;
 
-import Entinity.Category;
 import Entinity.Product;
-import org.dbunit.IDatabaseTester;
-
-import java.math.BigDecimal;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 public class ProductDAOImpl {
-    private IDatabaseTester databaseTester;
+    private SessionFactory sessionFactory;
 
-    public void setConnection(IDatabaseTester databaseTester) {
-        this.databaseTester = databaseTester;
+    public Product getProduct(int key) {
+        Session session = sessionFactory.openSession();
+        Product product = null;
+        try {
+            product = session.get(Product.class, key);
+        } catch (RuntimeException exception) {
+            exception.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return product;
     }
 
-//    protected List<Product> getProductsByCategory(String key) throws Exception {
+
+    public void setConnectionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    //    protected List<Product> getProductsByCategory(String key) throws Exception {
 //        Statement stmt = databaseTester.getConnection().getConnection().createStatement();
 //        ResultSet rs = stmt.executeQuery(
 //                "select ID, ProductName, Price, CategoryID " +

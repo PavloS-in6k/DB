@@ -10,8 +10,15 @@ import javax.persistence.*;
 public class Category {
     private int ID;
     private String name;
+    private Integer productsCount;
 
     public Category() {
+    }
+
+    public Category(String name, int ID, long productsCount) {
+        this.productsCount = Integer.valueOf(String.valueOf(productsCount));
+        this.name = name;
+        this.ID = ID;
     }
 
     @Id
@@ -20,15 +27,6 @@ public class Category {
     public int getID() {
         return ID;
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
-    }
-
 
     @Column(name = "CategoryName", nullable = false)
     public String getName() {
@@ -40,6 +38,23 @@ public class Category {
         this.name = name;
     }
 
+    @Transient
+    public int getProductsCount() {
+        return productsCount;
+    }
+
+    public void setProductsCount(int productsCount) {
+        this.productsCount = productsCount;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -48,6 +63,7 @@ public class Category {
         Category category = (Category) o;
 
         if (ID != category.ID) return false;
+        if (productsCount != category.productsCount) return false;
         return name != null ? name.equals(category.name) : category.name == null;
 
     }
