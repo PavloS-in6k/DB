@@ -1,3 +1,4 @@
+import DAO.OrderDAOImpl;
 import DAO.TaskDAO;
 import Entinity.Category;
 import Entinity.Product;
@@ -13,10 +14,13 @@ import static org.hamcrest.Matchers.contains;
 
 public class TaskDAOTest {
     TaskDAO taskDAO = new TaskDAO();
+    OrderDAOImpl orderDAO = new OrderDAOImpl();
 
     @Before
     public void init() throws Exception {
+        DB.setUpSessionFactory();
         taskDAO.setConnectionFactory(DB.getConnectionFactory());
+        orderDAO.setConnectionFactory(DB.getConnectionFactory());
     }
 
     @Test
@@ -49,7 +53,7 @@ public class TaskDAOTest {
                 new Product(2, new BigDecimal("20.00"), "sad power bank :(", new Category(1, "Power Bank"))
         );
 
-        assertThat(taskDAO.getAllItemsForOrderID(0), contains(productsForID0));
+        assertThat(orderDAO.getOrderByID(0).getProducts(), contains(productsForID0.toArray()));
     }
 }
 

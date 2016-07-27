@@ -56,13 +56,21 @@ public class Category {
     }
 
     @Override
+    public String toString() {
+        return "Category{" +
+                "ID=" + ID +
+                ", name='" + name + '\'' +
+                ", productsCount=" + productsCount +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         Category category = (Category) o;
 
-        if (ID != category.ID) return false;
         if (productsCount != category.productsCount) return false;
         return name != null ? name.equals(category.name) : category.name == null;
 

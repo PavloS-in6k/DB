@@ -3,6 +3,8 @@ package Entinity;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -18,7 +20,7 @@ public class Order {
     private User user;
     private LocalDateTime timeStamp;
     private BigDecimal price;
-
+    private List<Product> products;
 
     public Order(User user, LocalDateTime timeStamp, BigDecimal cost, int ID) {
         this.user = user;
@@ -53,6 +55,18 @@ public class Order {
         return ID;
     }
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @JoinTable(name = "OrderProducts",
+            joinColumns = {@JoinColumn(name = "OrderID")},
+            inverseJoinColumns = {@JoinColumn(name = "ProductID")}
+    )
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
 
     public void setID(int ID) {
         this.ID = ID;
@@ -71,18 +85,59 @@ public class Order {
     }
 
     @Override
+    public String toString() {
+        return "Order{" +
+                "ID=" + ID +
+                ", user=" + user +
+                ", timeStamp=" + timeStamp +
+                ", price=" + price +
+                ", products=" + products +
+                '}';
+    }
+
+    //    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//
+//        Order order = (Order) o;
+//
+//        if (ID != order.ID) return false;
+//        if (user != null ? !user.equals(order.user) : order.user != null) return false;
+//        if (timeStamp != null ? !timeStamp.equals(order.timeStamp) : order.timeStamp != null) return false;
+//        return price != null ? price.equals(order.price) : order.price == null;
+//
+//    }
+
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         Order order = (Order) o;
 
-        if (ID != order.ID) return false;
         if (user != null ? !user.equals(order.user) : order.user != null) return false;
         if (timeStamp != null ? !timeStamp.equals(order.timeStamp) : order.timeStamp != null) return false;
-        return price != null ? price.equals(order.price) : order.price == null;
+        if (price != null ? !price.equals(order.price) : order.price != null) return false;
+        return products != null ? compareProducts(order) : order.products == null;
 
     }
+
+    protected boolean compareProducts(Order order) {
+        return (products.containsAll(order.products) && products.size() == order.products.size());
+        //return Arrays.equals(products.toArray(), order.products.toArray());
+    }
+
+//    @Override
+//    public int hashCode() {
+//        int result = ID;
+//        result = 31 * result + (user != null ? user.hashCode() : 0);
+//        result = 31 * result + (timeStamp != null ? timeStamp.hashCode() : 0);
+//        result = 31 * result + (price != null ? price.hashCode() : 0);
+//        return result;
+//    }
+
 
     @Override
     public int hashCode() {
@@ -90,6 +145,7 @@ public class Order {
         result = 31 * result + (user != null ? user.hashCode() : 0);
         result = 31 * result + (timeStamp != null ? timeStamp.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + (products != null ? products.hashCode() : 0);
         return result;
     }
 }

@@ -1,6 +1,7 @@
 package Entinity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "Users", catalog = "Entity", uniqueConstraints = {
@@ -10,6 +11,7 @@ import javax.persistence.*;
 public class User {
     private String name;
     private int ID;
+    private List<Order> orders;
 
     public User() {
     }
@@ -31,6 +33,15 @@ public class User {
         return name;
     }
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
     public void setID(int ID) {
         this.ID = ID;
     }
@@ -38,6 +49,33 @@ public class User {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", ID=" + ID +
+                '}';
+    }
+//
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//
+//        User user = (User) o;
+//
+//        if (ID != user.ID) return false;
+//        if (name != null ? !name.equals(user.name) : user.name != null) return false;
+//        return orders != null ? isOrdersEquals(user) : user.orders == null;
+//
+//    }
+//
+//    protected boolean isOrdersEquals(User user) {
+//        return (user.orders.size() == orders.size() && orders.containsAll(user.orders));
+//        //return orders.equals(user.orders);
+//    }
+
 
     @Override
     public boolean equals(Object o) {

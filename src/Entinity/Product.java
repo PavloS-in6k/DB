@@ -71,22 +71,56 @@ public class Product {
     }
 
     @Override
+    public String toString() {
+        return "Product{" +
+                "price=" + price +
+                ", name='" + name + '\'' +
+                ", ID=" + ID +
+                ", category=" + category +
+                '}';
+    }
+
+    //    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//
+//        Product product = (Product) o;
+//
+//        if (ID != product.ID) return false;
+//        if (price != null ? !price.equals(product.price) : product.price != null) return false;
+//        return name != null ? name.equals(product.name) : product.name == null;
+//    }
+
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         Product product = (Product) o;
 
-        if (ID != product.ID) return false;
         if (price != null ? !price.equals(product.price) : product.price != null) return false;
-        return name != null ? name.equals(product.name) : product.name == null;
+        if (name != null ? !name.equals(product.name) : product.name != null) return false;
+        return category != null ? category.equals(product.category) : product.category == null;
+
     }
+
+//    @Override
+//    public int hashCode() {
+//        int result = price != null ? price.hashCode() : 0;
+//        result = 31 * result + (name != null ? name.hashCode() : 0);
+//        result = 31 * result + ID;
+//        return result;
+//    }
+
 
     @Override
     public int hashCode() {
         int result = price != null ? price.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + ID;
+        result = 31 * result + (category != null ? category.hashCode() : 0);
         return result;
     }
 }

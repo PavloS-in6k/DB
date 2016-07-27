@@ -11,6 +11,7 @@ public class UserDAOTest {
 
     @Before
     public void setUp() throws Exception {
+        DB.setUpSessionFactory();
         userDAO.setConnectionFactory(DB.getConnectionFactory());
     }
 
