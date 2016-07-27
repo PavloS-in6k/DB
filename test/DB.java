@@ -43,16 +43,19 @@ public class DB {
         }
     }
 
-    public static void setUpSessionFactory() {
-        if (factory == null) {
-            try {
-                factory = new Configuration().configure().buildSessionFactory();
-            } catch (Throwable ex) {
-                System.err.println("Failed to create sessionFactory object." + ex);
-                throw new ExceptionInInitializerError(ex);
-            }
-        }
+    public static void setUpDB() {
     }
+//
+//    public static void setUpSessionFactory() {
+//        if (factory == null) {
+//            try {
+//                factory = new Configuration().configure().buildSessionFactory();
+//            } catch (Throwable ex) {
+//                System.err.println("Failed to create sessionFactory object." + ex);
+//                throw new ExceptionInInitializerError(ex);
+//            }
+//        }
+//    }
 
     private static void createTablesSinceDbUnitDoesNot(Connection connection)
             throws SQLException {

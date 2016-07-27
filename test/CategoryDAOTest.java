@@ -1,7 +1,11 @@
 import DAO.CategoryDAOImpl;
-import Entinity.Category;
+import Entity.Category;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,13 +14,15 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"/spring-config.xml"})
 public class CategoryDAOTest {
-    private CategoryDAOImpl categoryDAO = new CategoryDAOImpl();
+    @Autowired
+    private CategoryDAOImpl categoryDAO;
 
     @Before
     public void setUp() throws Exception {
-        DB.setUpSessionFactory();
-        categoryDAO.setSession(DB.getConnectionFactory());
+        DB.setUpDB();
     }
 
     @Test

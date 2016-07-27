@@ -1,6 +1,6 @@
 package DAO;
 
-import Entinity.User;
+import Entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -22,6 +22,14 @@ public class UserDAOImpl {
 
     public void setConnectionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
     }
 }
 

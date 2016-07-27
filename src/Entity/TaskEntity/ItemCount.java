@@ -1,4 +1,4 @@
-package Entinity.TaskEntity;
+package Entity.TaskEntity;
 
 public class ItemCount {
     private String name;

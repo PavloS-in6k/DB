@@ -1,7 +1,7 @@
 package DAO;
 
-import Entinity.Category;
-import Entinity.Product;
+import Entity.Category;
+import Entity.Product;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -15,7 +15,7 @@ public class TaskDAO {
         List<Category> categories = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             categories = session.createQuery(
-                    "SELECT new Entinity.Category(category.name, category.ID, COUNT(product.category)) " +
+                    "SELECT new Entity.Category(category.name, category.ID, COUNT(product.category)) " +
                             "FROM Category category, Product product " +
                             "where category.ID=product.category.ID " +
                             "group by category.name, category.ID").getResultList();
@@ -35,9 +35,8 @@ public class TaskDAO {
         List<Product> requestedItems = null;
         Session session = sessionFactory.openSession();
         try {
-            //requestedItems = session.get(Category.class, key);
             requestedItems = session.createQuery(
-                    "SELECT new Entinity.Product() " +
+                    "SELECT new Entity.Product() " +
                             "FROM ").getResultList();
         } catch (RuntimeException exception) {
             exception.printStackTrace();
@@ -45,6 +44,14 @@ public class TaskDAO {
             session.close();
         }
         return requestedItems;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
     }
 }
 

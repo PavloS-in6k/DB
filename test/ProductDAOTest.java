@@ -1,21 +1,27 @@
 import DAO.ProductDAOImpl;
-import Entinity.Category;
-import Entinity.Product;
+import Entity.Category;
+import Entity.Product;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigDecimal;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"/spring-config.xml"})
 public class ProductDAOTest {
-    ProductDAOImpl productDAO = new ProductDAOImpl();
+    @Autowired
+    ProductDAOImpl productDAO;
 
     @Before
     public void setUp() throws Exception {
-        DB.setUpSessionFactory();
-        productDAO.setConnectionFactory(DB.getConnectionFactory());
+        DB.setUpDB();
     }
 
     @Test

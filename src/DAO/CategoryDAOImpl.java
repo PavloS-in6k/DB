@@ -1,6 +1,6 @@
 package DAO;
 
-import Entinity.Category;
+import Entity.Category;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -12,6 +12,12 @@ public class CategoryDAOImpl {
 
     public Category getCategory(int key) {
         Category requestedCategory = null;
+        sessionFactory.getCurrentSession().get(Category.class, key);
+        return requestedCategory;
+    }
+
+    /*
+            Category requestedCategory = null;
         Session session = sessionFactory.openSession();
         try {
             requestedCategory = session.get(Category.class, key);
@@ -21,7 +27,7 @@ public class CategoryDAOImpl {
             session.close();
         }
         return requestedCategory;
-    }
+    */
 
     public List<Category> getAllCategories() {
         List<Category> categories = new ArrayList<>();
@@ -36,8 +42,12 @@ public class CategoryDAOImpl {
         return categories;
     }
 
-    public void setSession(SessionFactory sessionFactory) {
+    public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
+    }
+
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
     }
 }
 

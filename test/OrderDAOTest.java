@@ -1,31 +1,33 @@
 import DAO.OrderDAOImpl;
-import Entinity.Category;
-import Entinity.Order;
-import Entinity.Product;
-import Entinity.User;
+import Entity.Category;
+import Entity.Order;
+import Entity.Product;
+import Entity.User;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import static java.util.Arrays.asList;
-import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.core.IsEqual.equalTo;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"/spring-config.xml"})
 public class OrderDAOTest {
-    OrderDAOImpl orderDAO = new OrderDAOImpl();
+    @Autowired
+    OrderDAOImpl orderDAO;
 
     @Before
     public void setUp() throws Exception {
-        DB.setUpSessionFactory();
-        orderDAO.setConnectionFactory(DB.getConnectionFactory());
+        DB.setUpDB();
     }
 
     @Test

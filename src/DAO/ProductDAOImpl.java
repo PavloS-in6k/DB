@@ -1,6 +1,6 @@
 package DAO;
 
-import Entinity.Product;
+import Entity.Product;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -23,6 +23,14 @@ public class ProductDAOImpl {
 
     public void setConnectionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
     }
 
     //    protected List<Product> getProductsByCategory(String key) throws Exception {

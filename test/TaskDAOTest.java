@@ -1,9 +1,13 @@
 import DAO.OrderDAOImpl;
 import DAO.TaskDAO;
-import Entinity.Category;
-import Entinity.Product;
+import Entity.Category;
+import Entity.Product;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -12,15 +16,17 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"/spring-config.xml"})
 public class TaskDAOTest {
-    TaskDAO taskDAO = new TaskDAO();
-    OrderDAOImpl orderDAO = new OrderDAOImpl();
+    @Autowired
+    TaskDAO taskDAO;
+    @Autowired
+    OrderDAOImpl orderDAO;
 
     @Before
     public void init() throws Exception {
-        DB.setUpSessionFactory();
-        taskDAO.setConnectionFactory(DB.getConnectionFactory());
-        orderDAO.setConnectionFactory(DB.getConnectionFactory());
+        DB.setUpDB();
     }
 
     @Test

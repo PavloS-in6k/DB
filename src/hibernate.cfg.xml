@@ -13,14 +13,12 @@
         <!--  -->
         <!-- JDBC connection pool (use the built-in) -->
         <property name="connection.pool_size">1</property>
-
-
         <property name="dialect">org.hibernate.dialect.HSQLDialect</property>
 
         <!-- Mapping with model class containing annotations -->
-        <mapping class="Entinity.Category"/>
-        <mapping class="Entinity.Product"/>
-        <mapping class="Entinity.Order"/>
-        <mapping class="Entinity.User"/>
+        <mapping class="Entity.Category"/>
+        <mapping class="Entity.Product"/>
+        <mapping class="Entity.Order"/>
+        <mapping class="Entity.User"/>
     </session-factory>
 </hibernate-configuration>
