@@ -1,27 +1,15 @@
 package DAO;
 
 import Entity.Order;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 public class OrderDAOImpl {
     private SessionFactory sessionFactory;
 
     public Order getOrderByID(int key) {
-        Session session = sessionFactory.openSession();
-        Order order = null;
-        try {
-            order = session.get(Order.class, key);
-        } catch (RuntimeException exception) {
-            exception.printStackTrace();
-        } finally {
-            session.close();
-        }
-        return order;
-    }
-
-    public void setConnectionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+        return sessionFactory.getCurrentSession().get(Order.class, key);
     }
 
     public void setSessionFactory(SessionFactory sessionFactory) {

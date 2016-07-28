@@ -10,11 +10,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.List;
 
+import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.core.IsEqual.equalTo;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/spring-config.xml"})
@@ -43,23 +44,22 @@ public class TaskDAOTest {
 
     @Test
     public void getAllItemsForOrderID() throws Exception {
-        /*
-       <OrderProducts ID="0" OrderID="0" ProductID="1"/>
-       <OrderProducts ID="1" OrderID="0" ProductID="1"/>
-
-       <Products ID="1" ProductName="Usual power bank" Price="800.00" CategoryID="1"/>
-
-       <OrderProducts ID="2" OrderID="0" ProductID="2"/>
-
-       <Products ID="2" ProductName="sad power bank :(" Price="20.00" CategoryID="1"/>
-         */
-        List<Product> productsForID0 = Arrays.asList(
+        List<Product> productsForID0 = asList(
                 new Product(1, new BigDecimal("800.00"), "Usual power bank", new Category(1, "Power Bank")),
                 new Product(1, new BigDecimal("800.00"), "Usual power bank", new Category(1, "Power Bank")),
                 new Product(2, new BigDecimal("20.00"), "sad power bank :(", new Category(1, "Power Bank"))
         );
 
         assertThat(orderDAO.getOrderByID(0).getProducts(), contains(productsForID0.toArray()));
+    }
+
+    @Test
+    public void getTop3() throws Exception {
+        //<OrderProducts ID="4" OrderID="2" ProductID="4" Price="900.00"/>
+        Category category = new Category(0, "Memory Plank");
+        List<Product> top3Products = asList(new Product(4, new BigDecimal("900.00"), "Memory NOXDDR 619MHz", category));
+
+        assertThat(taskDAO.getTop3(category), equalTo(top3Products));
     }
 }
 

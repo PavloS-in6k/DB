@@ -2,48 +2,32 @@ package DAO;
 
 import Entity.Category;
 import Entity.Product;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
+@Transactional
 public class TaskDAO {
     private SessionFactory sessionFactory;
 
     public List<Category> getAllCategoriesWithNumbers() {
-        List<Category> categories = new ArrayList<>();
-        try (Session session = sessionFactory.openSession()) {
-            categories = session.createQuery(
-                    "SELECT new Entity.Category(category.name, category.ID, COUNT(product.category)) " +
-                            "FROM Category category, Product product " +
-                            "where category.ID=product.category.ID " +
-                            "group by category.name, category.ID").getResultList();
-
-        } catch (RuntimeException exception) {
-            exception.printStackTrace();
-        }
-        return categories;
+        return sessionFactory.getCurrentSession().createQuery(
+                "SELECT new Entity.Category(category.name, category.ID, COUNT(product.category)) " +
+                        "FROM Category category, Product product " +
+                        "where category.ID=product.category.ID " +
+                        "group by category.name, category.ID").getResultList();
     }
 
-
-    public void setConnectionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-    public List<Product> getAllItemsForOrderID(int key) {
-        List<Product> requestedItems = null;
-        Session session = sessionFactory.openSession();
-        try {
-            requestedItems = session.createQuery(
-                    "SELECT new Entity.Product() " +
-                            "FROM ").getResultList();
-        } catch (RuntimeException exception) {
-            exception.printStackTrace();
-        } finally {
-            session.close();
-        }
-        return requestedItems;
+    public List<Category> getTop3(Category product) {
+        return sessionFactory.getCurrentSession().createQuery(
+                "SELECT  product\n" +
+                        "FROM  Product product, Order order\n" +
+                        "WHERE (\n" +
+                        "(Category.ID=Product.category.ID) \n" +
+                        "AND (Order.timeStamp=current_date)\n" +
+                        "  )\n" +
+                        "GROUP BY ").getResultList();
     }
 
     public void setSessionFactory(SessionFactory sessionFactory) {
@@ -55,31 +39,6 @@ public class TaskDAO {
     }
 }
 
-//    private IDatabaseTester databaseTester;
-//
-//    public void setConnection(IDatabaseTester databaseTester) {
-//        this.databaseTester = databaseTester;
-//    }
-//
-//    public List<ItemCount> getCategoriesWithCounts() throws Exception {
-//        Statement stmt = databaseTester.getConnection().getConnection().createStatement();
-//        ResultSet rs = stmt.executeQuery(
-//                "SELECT Categories.CategoryName, Count(Products.ID) AS ProductCount " +
-//                        "FROM Categories, Products " +
-//                        "WHERE Products.CategoryID = Categories.ID " +
-//                        "group BY Categories.category_name");
-//
-//        List<ItemCount> itemCounts = new ArrayList<>();
-//        String name;
-//        int count;
-//        while (rs.next()) {
-//            name = rs.getString("CategoryName");
-//            count = rs.getInt("NumberOfProducts");
-//            itemCounts.add(new ItemCount(name, count));
-//        }
-//        return (itemCounts);
-//    }
-//
 //    public List<ItemCount> getTop3(String categoryName) throws Exception {
 //        Statement stmt = databaseTester.getConnection().getConnection().createStatement();
 //        ResultSet rs = stmt.executeQuery(

@@ -1,45 +1,21 @@
 package DAO;
 
 import Entity.Category;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
+@Transactional
 public class CategoryDAOImpl {
     private SessionFactory sessionFactory;
 
     public Category getCategory(int key) {
-        Category requestedCategory = null;
-        sessionFactory.getCurrentSession().get(Category.class, key);
-        return requestedCategory;
+        return sessionFactory.getCurrentSession().get(Category.class, key);
     }
 
-    /*
-            Category requestedCategory = null;
-        Session session = sessionFactory.openSession();
-        try {
-            requestedCategory = session.get(Category.class, key);
-        } catch (RuntimeException exception) {
-            exception.printStackTrace();
-        } finally {
-            session.close();
-        }
-        return requestedCategory;
-    */
-
     public List<Category> getAllCategories() {
-        List<Category> categories = new ArrayList<>();
-        Session session = sessionFactory.openSession();
-        try {
-            categories = session.createQuery("FROM Category").getResultList();
-        } catch (RuntimeException exception) {
-            exception.printStackTrace();
-        } finally {
-            session.close();
-        }
-        return categories;
+        return (List<Category>) sessionFactory.getCurrentSession().createQuery("FROM Category").getResultList();
     }
 
     public void setSessionFactory(SessionFactory sessionFactory) {
@@ -50,39 +26,3 @@ public class CategoryDAOImpl {
         return sessionFactory;
     }
 }
-
-
-//
-//    public List<Category> getAllCategories() throws Exception {
-//        Statement stmt = databaseTester.getConnection().getConnection().createStatement();
-//        ResultSet rs = stmt.executeQuery("select * FROM Categories");
-//
-//        List<Category> categories = new ArrayList<>();
-//        int ID;
-//        String name;
-//        while (rs.next()) {
-//            ID = rs.getInt("ID");
-//            name = rs.getString("CategoryName");
-//            categories.add(new Category(ID, name));
-//        }
-//
-//        return categories;
-//    }
-
-
-//    public static Category getCategory(String key) throws Exception {
-//
-//        Statement stmt = databaseTester.getConnection().getConnection().createStatement();
-//        ResultSet rs = stmt.executeQuery(
-//                "select CategoryName FROM Categories WHERE ID=" + key);
-//
-//        int ID = Integer.parseInt(key);
-//        List<Product> products = productDAO.getProductsByCategory(key);
-//        String name = "";
-//        if (rs.next()) {
-//            name = rs.getString("CategoryName");
-//        }
-//        rs.close();
-//        stmt.close();
-//        return (new Category(ID, name));
-//    }
